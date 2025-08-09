@@ -6,6 +6,8 @@ import appbarber.DTO.TurnoDTO;
 import appbarber.DTO.TurnoReprogramarRequest;
 import appbarber.repository.TurnoRepository;
 import appbarber.service.TurnoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+
+@Tag(name = "Turnos", description = "CRUD de turnos por empresa")
 @RestController
 @RequestMapping("/api/empresas/{empresaId}")
 public class TurnoController {
@@ -26,6 +30,7 @@ public class TurnoController {
     private TurnoService turnoService;
 
 
+    @Operation(summary = "Listar turnos por empresa y rango de fecha")
     @PostMapping("/turnos")
     @ResponseStatus(HttpStatus.CREATED)
     public TurnoDTO crear(
@@ -35,6 +40,7 @@ public class TurnoController {
         return turnoService.crear(empresaId, req);
     }
 
+    @Operation(summary = "Listar turnos por barbero y día")
     @GetMapping("/barberos/{barberoId}/turnos")
     public List<TurnoDTO> listarPorBarberoYDia(@PathVariable Long empresaId,
                                                @PathVariable Long barberoId,
@@ -47,28 +53,32 @@ public class TurnoController {
         return turnoService.listarPorBarberoYRango(empresaId, barberoId, desde, hasta);
     }
 
-
+    @Operation(summary = " Confirmar turno")
     @PatchMapping("/turnos/{turnoId}/confirmar")
     public TurnoDTO confirmar(@PathVariable Long empresaId, @PathVariable Long turnoId) {
         return turnoService.confirmar(empresaId, turnoId);
     }
 
+    @Operation(summary = "Cancelar turno")
     @PatchMapping("/turnos/{turnoId}/cancelar")
     public TurnoDTO cancelar(@PathVariable Long empresaId, @PathVariable Long turnoId) {
         return turnoService.cancelar(empresaId, turnoId);
     }
 
+    @Operation(summary = "Completar turno")
     @PatchMapping("/turnos/{turnoId}/completar")
     public TurnoDTO completar(@PathVariable Long empresaId, @PathVariable Long turnoId) {
         return turnoService.completar(empresaId, turnoId);
     }
 
+    @Operation(summary = "Reprogramar turno")
     @PatchMapping("/turnos/{turnoId}/reprogramar")
     public TurnoDTO reprogramar(@PathVariable Long empresaId, @PathVariable Long turnoId,
                                 @Valid @RequestBody TurnoReprogramarRequest req) {
         return turnoService.reprogramar(empresaId, turnoId, req);
     }
 
+    @Operation(summary = "Obtener turnos")
     @GetMapping("/turnos")
     public List<TurnoDTO> listarEmpresa(@PathVariable Long empresaId,
                                         @RequestParam(required = false) String desde,
@@ -78,6 +88,7 @@ public class TurnoController {
         return turnoService.listarPorEmpresaYRango(empresaId, d, h);
     }
 
+    @Operation(summary = "Listar turnos por cliente y rango de fecha")
     @GetMapping("/clientes/{clienteId}/turnos")
     public List<TurnoDTO> listarCliente(@PathVariable Long empresaId, @PathVariable Long clienteId,
                                         @RequestParam(required = false) String desde,
