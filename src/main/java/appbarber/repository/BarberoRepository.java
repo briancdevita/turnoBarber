@@ -11,4 +11,6 @@ import java.util.List;
 public interface BarberoRepository extends JpaRepository<Barbero, Long> {
     List<Barbero> findByEmpresaIdOrderByNombreAsc(Long empresaId);
     List<Barbero> findByEmpresaIdAndActivoTrueOrderByNombreAsc(Long empresaId);
+
+
 }

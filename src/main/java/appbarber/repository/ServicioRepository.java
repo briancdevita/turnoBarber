@@ -11,4 +11,7 @@ import java.util.List;
 public interface ServicioRepository extends JpaRepository<Servicio, Long> {
     List<Servicio> findByEmpresaIdOrderByNombreAsc(Long empresaId);
     List<Servicio> findByEmpresaIdAndActivoTrueOrderByNombreAsc(Long empresaId);
+
+    boolean existsByEmpresaIdAndNombreIgnoreCase(Long empresaId, String nombre);
+    boolean existsByEmpresaIdAndNombreIgnoreCaseAndIdNot(Long empresaId, String nombre, Long id);
 }
