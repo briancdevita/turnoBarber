@@ -25,4 +25,12 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
     List<Turno> findByEmpresaIdAndBarberoIdAndInicioBetweenOrderByInicioAsc(
             Long empresaId, Long barberoId, LocalDateTime desde, LocalDateTime hasta
     );
+
+    List<Turno> findByEmpresaIdAndInicioBetweenOrderByInicioAsc(
+            Long empresaId, LocalDateTime desde, LocalDateTime hasta
+    );
+
+    List<Turno> findByEmpresaIdAndClienteIdAndInicioBetweenOrderByInicioAsc(
+            Long empresaId, Long clienteId, LocalDateTime desde, LocalDateTime hasta
+    );
 }
